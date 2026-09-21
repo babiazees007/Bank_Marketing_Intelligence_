@@ -1,0 +1,2693 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portuguese Bank Marketing • AI Predictive Intelligence & Strategic Analytics</title>
+  <meta name="description" content="Executive decision dashboard for Portuguese Bank Term Deposit Prediction. Features the Duration Leakage mitigation, pre-call lead scoring engine, decile ROI simulator, and strategic marketing playbook." />
+  
+  <!-- Modern Typography: Sora (Display/Headings) + Inter (Interface & Body) + JetBrains Mono (Data/Code) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Sora:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  
+  <!-- Chart.js CDN for interactive visual analytics -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+
+  <style>
+    /* ==========================================================================
+       THEME VARIABLES & DESIGN SYSTEM (DARK & LIGHT MODES)
+       ========================================================================== */
+    :root {
+      /* Brand Color Accents */
+      --brand-indigo: #6366f1;
+      --brand-indigo-light: #818cf8;
+      --brand-indigo-glow: rgba(99, 102, 241, 0.25);
+      
+      --brand-cyan: #0ea5e9;
+      --brand-cyan-light: #38bdf8;
+      --brand-cyan-glow: rgba(14, 165, 233, 0.25);
+
+      --brand-emerald: #10b981;
+      --brand-emerald-light: #34d399;
+      --brand-emerald-glow: rgba(16, 185, 129, 0.2);
+
+      --brand-amber: #f59e0b;
+      --brand-amber-light: #fbbf24;
+
+      --brand-rose: #f43f5e;
+      --brand-rose-light: #fb7185;
+
+      /* Typography */
+      --font-display: 'Sora', sans-serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-pill: 9999px;
+
+      --transition-fast: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-smooth: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* DARK THEME (Obsidian Nebula - Default) */
+    [data-theme="dark"] {
+      --bg-base: #060911;
+      --bg-surface: #0c111d;
+      --bg-surface-elevated: #151d2f;
+      --bg-card: rgba(12, 17, 29, 0.78);
+      --bg-card-hover: rgba(21, 29, 47, 0.88);
+      --bg-glass: rgba(12, 17, 29, 0.65);
+
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-card: rgba(255, 255, 255, 0.07);
+      --border-hover: rgba(99, 102, 241, 0.45);
+      --inner-bevel: inset 0 1px 0 rgba(255, 255, 255, 0.12);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --nav-bg: rgba(6, 9, 17, 0.82);
+      --hero-grid-color: rgba(99, 102, 241, 0.04);
+      --shadow-card: 0 12px 32px -8px rgba(0, 0, 0, 0.6);
+      --table-row-hover: rgba(99, 102, 241, 0.06);
+      --table-header-bg: rgba(12, 17, 29, 0.95);
+    }
+
+    /* LIGHT THEME (Executive Swiss Banking) */
+    [data-theme="light"] {
+      --bg-base: #f8fafc;
+      --bg-surface: #ffffff;
+      --bg-surface-elevated: #f1f5f9;
+      --bg-card: rgba(255, 255, 255, 0.92);
+      --bg-card-hover: #ffffff;
+      --bg-glass: rgba(255, 255, 255, 0.85);
+
+      --border-subtle: rgba(15, 23, 42, 0.08);
+      --border-card: rgba(15, 23, 42, 0.08);
+      --border-hover: rgba(99, 102, 241, 0.5);
+      --inner-bevel: inset 0 1px 0 rgba(255, 255, 255, 0.8);
+
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --text-dim: #94a3b8;
+
+      --nav-bg: rgba(248, 250, 252, 0.85);
+      --hero-grid-color: rgba(99, 102, 241, 0.03);
+      --shadow-card: 0 10px 28px -6px rgba(15, 23, 42, 0.07);
+      --table-row-hover: rgba(99, 102, 241, 0.04);
+      --table-header-bg: #f8fafc;
+    }
+
+    /* ==========================================================================
+       BASE & RESET
+       ========================================================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      line-height: 1.65;
+      overflow-x: hidden;
+      transition: background-color var(--transition-smooth), color var(--transition-smooth);
+      position: relative;
+    }
+
+    /* Aurora Glow Elements */
+    .aurora-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .aurora-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(140px);
+      opacity: 0.15;
+      animation: floatOrb 22s infinite alternate ease-in-out;
+    }
+
+    [data-theme="light"] .aurora-orb {
+      opacity: 0.08;
+    }
+
+    .orb-1 {
+      top: -10%;
+      left: 15%;
+      width: 600px;
+      height: 600px;
+      background: linear-gradient(135deg, var(--brand-indigo), var(--brand-cyan));
+    }
+
+    .orb-2 {
+      top: 40%;
+      right: -10%;
+      width: 550px;
+      height: 550px;
+      background: linear-gradient(135deg, var(--brand-cyan), var(--brand-emerald));
+      animation-delay: -7s;
+    }
+
+    .orb-3 {
+      bottom: -10%;
+      left: 30%;
+      width: 500px;
+      height: 500px;
+      background: linear-gradient(135deg, var(--brand-emerald), var(--brand-amber));
+      animation-delay: -14s;
+    }
+
+    @keyframes floatOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.1); }
+      100% { transform: translate(-40px, 60px) scale(0.95); }
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ==========================================================================
+       HEADER & NAVIGATION BAR
+       ========================================================================== */
+    header.site-header {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      background: var(--nav-bg);
+      border-bottom: 1px solid var(--border-subtle);
+      transition: background-color var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.3rem;
+      letter-spacing: -0.03em;
+    }
+
+    .brand-mark {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      background: linear-gradient(135deg, var(--brand-indigo), var(--brand-cyan));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 16px var(--brand-indigo-glow);
+    }
+
+    .brand-mark svg {
+      width: 22px;
+      height: 22px;
+      fill: #ffffff;
+    }
+
+    .brand-gradient-text {
+      background: linear-gradient(135deg, var(--brand-indigo-light), var(--brand-cyan));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 24px;
+      list-style: none;
+    }
+
+    .nav-link {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      transition: color var(--transition-fast);
+      position: relative;
+      padding: 6px 2px;
+    }
+
+    .nav-link:hover {
+      color: var(--text-main);
+    }
+
+    .nav-actions-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    /* Theme Toggle Button */
+    .theme-toggle-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .theme-toggle-btn:hover {
+      border-color: var(--brand-indigo);
+      transform: scale(1.05);
+    }
+
+    .theme-toggle-btn svg {
+      width: 18px;
+      height: 18px;
+      stroke: currentColor;
+    }
+
+    .nav-cta-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 20px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, var(--brand-indigo), var(--brand-cyan));
+      color: #ffffff;
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.88rem;
+      transition: all var(--transition-fast);
+      box-shadow: 0 4px 14px var(--brand-indigo-glow);
+    }
+
+    .nav-cta-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 22px rgba(99, 102, 241, 0.45);
+    }
+
+    /* ==========================================================================
+       HERO SECTION
+       ========================================================================== */
+    .hero-section {
+      padding: 90px 0 70px;
+      position: relative;
+      text-align: center;
+    }
+
+    .hero-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 18px;
+      border-radius: var(--radius-pill);
+      background: rgba(99, 102, 241, 0.1);
+      border: 1px solid rgba(99, 102, 241, 0.3);
+      color: var(--brand-indigo-light);
+      font-family: var(--font-display);
+      font-size: 0.82rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 26px;
+    }
+
+    .pulsing-indicator {
+      width: 8px;
+      height: 8px;
+      background-color: var(--brand-emerald);
+      border-radius: 50%;
+      box-shadow: 0 0 10px var(--brand-emerald);
+      animation: pulseIndicator 2s infinite ease-in-out;
+    }
+
+    @keyframes pulseIndicator {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.35; transform: scale(0.75); }
+    }
+
+    h1.hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(2.3rem, 5.2vw, 4.3rem);
+      font-weight: 800;
+      line-height: 1.14;
+      letter-spacing: -0.035em;
+      max-width: 980px;
+      margin: 0 auto 24px;
+    }
+
+    .hero-gradient-headline {
+      background: linear-gradient(135deg, var(--brand-indigo-light) 10%, var(--brand-cyan) 50%, var(--brand-emerald-light) 95%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.hero-desc {
+      font-size: clamp(1.05rem, 1.8vw, 1.22rem);
+      color: var(--text-muted);
+      max-width: 820px;
+      margin: 0 auto 38px;
+      font-weight: 400;
+      line-height: 1.68;
+    }
+
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 64px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 14px 28px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      border: 1px solid transparent;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--brand-indigo), var(--brand-cyan));
+      color: #ffffff;
+      box-shadow: 0 6px 20px var(--brand-indigo-glow);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 28px rgba(99, 102, 241, 0.45);
+    }
+
+    .btn-outline {
+      background: var(--bg-card);
+      color: var(--text-main);
+      border: 1px solid var(--border-subtle);
+      box-shadow: var(--shadow-card);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--brand-indigo);
+      color: var(--brand-indigo-light);
+      transform: translateY(-2px);
+    }
+
+    /* KPI Hero Stat Cards */
+    .hero-stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px;
+    }
+
+    .kpi-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 26px 24px;
+      text-align: left;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--shadow-card);
+      position: relative;
+      overflow: hidden;
+      transition: transform var(--transition-fast), border-color var(--transition-fast);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--border-hover);
+    }
+
+    .kpi-top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .kpi-trend-pill {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: var(--radius-pill);
+    }
+
+    .trend-green { background: rgba(16, 185, 129, 0.15); color: var(--brand-emerald-light); }
+    .trend-indigo { background: rgba(99, 102, 241, 0.15); color: var(--brand-indigo-light); }
+    .trend-amber { background: rgba(245, 158, 11, 0.15); color: var(--brand-amber-light); }
+    .trend-cyan { background: rgba(14, 165, 233, 0.15); color: var(--brand-cyan-light); }
+
+    .kpi-number {
+      font-family: var(--font-display);
+      font-size: 2.5rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .kpi-number.text-indigo { color: var(--brand-indigo-light); }
+    .kpi-number.text-emerald { color: var(--brand-emerald-light); }
+    .kpi-number.text-amber { color: var(--brand-amber-light); }
+    .kpi-number.text-cyan { color: var(--brand-cyan-light); }
+
+    .kpi-label {
+      font-family: var(--font-display);
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 4px;
+    }
+
+    .kpi-caption {
+      font-size: 0.83rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       SECTION HEADINGS & WRAPPERS
+       ========================================================================== */
+    section.page-section {
+      padding: 95px 0;
+      border-top: 1px solid var(--border-subtle);
+      position: relative;
+    }
+
+    .section-header {
+      text-align: center;
+      max-width: 780px;
+      margin: 0 auto 58px;
+    }
+
+    .section-eyebrow {
+      display: inline-block;
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--brand-indigo-light);
+      margin-bottom: 12px;
+      background: rgba(99, 102, 241, 0.1);
+      padding: 4px 16px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.6vw, 2.9rem);
+      font-weight: 800;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      margin-bottom: 16px;
+    }
+
+    .section-subtitle {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    /* ==========================================================================
+       PROBLEM STATEMENT SECTION
+       ========================================================================== */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    .problem-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 32px 28px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .problem-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(244, 63, 94, 0.4);
+    }
+
+    .problem-icon-wrapper {
+      width: 48px;
+      height: 48px;
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    .problem-icon-wrapper.rose { background: rgba(244, 63, 94, 0.12); color: var(--brand-rose-light); border: 1px solid rgba(244, 63, 94, 0.25); }
+    .problem-icon-wrapper.amber { background: rgba(245, 158, 11, 0.12); color: var(--brand-amber-light); border: 1px solid rgba(245, 158, 11, 0.25); }
+    .problem-icon-wrapper.cyan { background: rgba(14, 165, 233, 0.12); color: var(--brand-cyan-light); border: 1px solid rgba(14, 165, 233, 0.25); }
+
+    .problem-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .problem-card p {
+      font-size: 0.94rem;
+      color: var(--text-muted);
+      line-height: 1.65;
+      margin-bottom: 20px;
+      flex-grow: 1;
+    }
+
+    .problem-stat-tag {
+      font-family: var(--font-mono);
+      font-size: 0.83rem;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: var(--radius-sm);
+      width: fit-content;
+    }
+
+    .problem-stat-tag.danger { background: rgba(244, 63, 94, 0.12); color: var(--brand-rose-light); }
+    .problem-stat-tag.warning { background: rgba(245, 158, 11, 0.12); color: var(--brand-amber-light); }
+
+    /* Duration Leakage Spotlight Banner */
+    .leakage-banner {
+      background: linear-gradient(135deg, rgba(244, 63, 94, 0.08), var(--bg-surface));
+      border: 1px solid rgba(244, 63, 94, 0.25);
+      border-radius: var(--radius-lg);
+      padding: 38px;
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 36px;
+      align-items: center;
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+    }
+
+    .leakage-content h3 {
+      font-family: var(--font-display);
+      font-size: 1.55rem;
+      font-weight: 800;
+      color: var(--brand-rose-light);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .leakage-content p {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      line-height: 1.68;
+      margin-bottom: 14px;
+    }
+
+    .leakage-comparison-box {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 24px;
+    }
+
+    .leakage-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .leakage-row:last-child {
+      border-bottom: none;
+    }
+
+    .badge-tag {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      text-transform: uppercase;
+    }
+
+    .badge-tag.invalid { background: rgba(244, 63, 94, 0.18); color: var(--brand-rose-light); border: 1px solid rgba(244, 63, 94, 0.3); }
+    .badge-tag.valid { background: rgba(16, 185, 129, 0.18); color: var(--brand-emerald-light); border: 1px solid rgba(16, 185, 129, 0.3); }
+
+    /* ==========================================================================
+       SOLUTIONS & ENGINEERING FEATS
+       ========================================================================== */
+    .solved-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+      gap: 24px;
+    }
+
+    .solved-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+      transition: all var(--transition-fast);
+    }
+
+    .solved-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--brand-indigo);
+    }
+
+    .solved-step-tag {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--brand-indigo-light);
+      background: rgba(99, 102, 241, 0.12);
+      padding: 3px 10px;
+      border-radius: var(--radius-pill);
+      width: fit-content;
+      margin-bottom: 16px;
+    }
+
+    .solved-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--text-main);
+    }
+
+    .solved-box-challenge {
+      background: rgba(244, 63, 94, 0.06);
+      border-left: 3px solid var(--brand-rose);
+      padding: 12px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin-bottom: 12px;
+      font-size: 0.86rem;
+      color: #fca5a5;
+    }
+
+    .solved-box-solution {
+      background: rgba(16, 185, 129, 0.07);
+      border-left: 3px solid var(--brand-emerald);
+      padding: 12px 14px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      font-size: 0.88rem;
+      color: #a7f3d0;
+      margin-top: auto;
+    }
+
+    /* ==========================================================================
+       MODEL BENCHMARKS TABLE & CHARTS
+       ========================================================================== */
+    .table-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      overflow-x: auto;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+      margin-bottom: 48px;
+    }
+
+    table.benchmark-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.94rem;
+    }
+
+    table.benchmark-table th {
+      background: var(--table-header-bg);
+      padding: 18px 20px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-size: 0.78rem;
+      letter-spacing: 0.06em;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    table.benchmark-table td {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border-subtle);
+      color: var(--text-main);
+    }
+
+    table.benchmark-table tr:hover td {
+      background: var(--table-row-hover);
+    }
+
+    table.benchmark-table tr.champion-row {
+      background: rgba(99, 102, 241, 0.08);
+    }
+
+    table.benchmark-table tr.champion-row td {
+      font-weight: 600;
+    }
+
+    table.benchmark-table tr.leakage-row {
+      background: rgba(244, 63, 94, 0.05);
+      color: var(--text-muted);
+    }
+
+    .badge-deploy {
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--brand-emerald-light);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .badge-infeasible {
+      background: rgba(244, 63, 94, 0.15);
+      color: var(--brand-rose-light);
+      border: 1px solid rgba(244, 63, 94, 0.3);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .badge-baseline {
+      background: rgba(99, 102, 241, 0.12);
+      color: var(--brand-indigo-light);
+      border: 1px solid rgba(99, 102, 241, 0.25);
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    /* Analytics Charts Box */
+    .analytics-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 34px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+    }
+
+    .tabs-nav {
+      display: flex;
+      gap: 10px;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+      overflow-x: auto;
+    }
+
+    .tab-trigger {
+      background: transparent;
+      border: 1px solid transparent;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: var(--radius-pill);
+      cursor: pointer;
+      transition: all var(--transition-fast);
+      white-space: nowrap;
+    }
+
+    .tab-trigger:hover {
+      color: var(--text-main);
+      background: var(--bg-surface-elevated);
+    }
+
+    .tab-trigger.active {
+      background: rgba(99, 102, 241, 0.15);
+      border-color: rgba(99, 102, 241, 0.35);
+      color: var(--brand-indigo-light);
+    }
+
+    .tab-panel {
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+      animation: tabFadeIn 0.3s ease;
+    }
+
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .canvas-wrapper {
+      position: relative;
+      height: 380px;
+      width: 100%;
+    }
+
+    .chart-footnotes {
+      margin-top: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      justify-content: center;
+    }
+
+    .footnote-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .footnote-swatch {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    /* ==========================================================================
+       ROI & DECILE SIMULATOR
+       ========================================================================== */
+    .calc-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 40px;
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      backdrop-filter: blur(14px);
+    }
+
+    .calc-controls h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .calc-controls p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      margin-bottom: 28px;
+    }
+
+    .control-row {
+      margin-bottom: 24px;
+    }
+
+    .control-label-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 8px;
+      font-family: var(--font-display);
+      font-size: 0.92rem;
+      font-weight: 600;
+    }
+
+    .control-badge {
+      font-family: var(--font-mono);
+      background: rgba(99, 102, 241, 0.15);
+      color: var(--brand-indigo-light);
+      padding: 3px 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: var(--bg-surface-elevated);
+      outline: none;
+      -webkit-appearance: none;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--brand-indigo-light);
+      cursor: pointer;
+      box-shadow: 0 0 12px var(--brand-indigo);
+      transition: transform var(--transition-fast);
+    }
+
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    .decile-btn-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .decile-select-btn {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-muted);
+      padding: 9px 12px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all var(--transition-fast);
+    }
+
+    .decile-select-btn:hover {
+      border-color: var(--brand-indigo);
+      color: var(--text-main);
+    }
+
+    .decile-select-btn.active {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--brand-indigo);
+      color: var(--brand-indigo-light);
+    }
+
+    .calc-outputs {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .calc-outputs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.15rem;
+    }
+
+    .kpi-duo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-bottom: 24px;
+    }
+
+    .kpi-subcard {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      padding: 16px;
+      border-radius: var(--radius-sm);
+    }
+
+    .kpi-subcard .num {
+      font-family: var(--font-mono);
+      font-size: 1.75rem;
+      font-weight: 800;
+      line-height: 1.15;
+    }
+
+    .kpi-subcard .desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    .calc-callout-msg {
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      padding: 14px 18px;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: #a7f3d0;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    [data-theme="light"] .calc-callout-msg {
+      color: #065f46;
+      background: #ecfdf5;
+      border-color: #a7f3d0;
+    }
+
+    /* ==========================================================================
+       LEAD PROPENSITY SANDBOX
+       ========================================================================== */
+    .sandbox-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 38px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 36px;
+      align-items: center;
+    }
+
+    .sandbox-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .form-field label {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-muted);
+    }
+
+    .select-input {
+      background: var(--bg-surface-elevated);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 11px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-body);
+      font-size: 0.9rem;
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    .select-input:focus {
+      border-color: var(--brand-indigo);
+      box-shadow: 0 0 10px var(--brand-indigo-glow);
+    }
+
+    .sandbox-result-box {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-hover);
+      border-radius: var(--radius-md);
+      padding: 30px;
+      text-align: center;
+    }
+
+    .priority-badge {
+      display: inline-block;
+      padding: 6px 16px;
+      border-radius: var(--radius-pill);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 16px;
+    }
+
+    .priority-badge.tier-high { background: rgba(16, 185, 129, 0.2); color: var(--brand-emerald-light); border: 1px solid var(--brand-emerald); }
+    .priority-badge.tier-medium { background: rgba(245, 158, 11, 0.2); color: var(--brand-amber-light); border: 1px solid var(--brand-amber); }
+    .priority-badge.tier-low { background: rgba(244, 63, 94, 0.2); color: var(--brand-rose-light); border: 1px solid var(--brand-rose); }
+
+    .score-meter {
+      font-family: var(--font-mono);
+      font-size: 3.2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .score-label {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 18px;
+    }
+
+    .script-advice-box {
+      background: var(--bg-base);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+      font-size: 0.88rem;
+      color: var(--text-main);
+      text-align: left;
+      line-height: 1.5;
+    }
+
+    /* ==========================================================================
+       STRATEGIC 7-PILLAR PLAYBOOK
+       ========================================================================== */
+    .playbook-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 24px;
+    }
+
+    .playbook-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+      transition: all var(--transition-fast);
+      position: relative;
+    }
+
+    .playbook-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--brand-emerald);
+    }
+
+    .playbook-num-tag {
+      width: 34px;
+      height: 34px;
+      border-radius: 50%;
+      background: rgba(16, 185, 129, 0.15);
+      color: var(--brand-emerald-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 0.92rem;
+      margin-bottom: 18px;
+      border: 1px solid rgba(16, 185, 129, 0.3);
+    }
+
+    .playbook-card h4 {
+      font-family: var(--font-display);
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-main);
+    }
+
+    .playbook-card p {
+      font-size: 0.93rem;
+      color: var(--text-muted);
+      line-height: 1.62;
+      margin-bottom: 16px;
+    }
+
+    .playbook-kpi-pill {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--brand-emerald-light);
+      background: rgba(16, 185, 129, 0.08);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      width: fit-content;
+      border: 1px solid rgba(16, 185, 129, 0.2);
+    }
+
+    /* ==========================================================================
+       DELIVERABLES SECTION
+       ========================================================================== */
+    .deliverables-wrapper {
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      border-radius: var(--radius-lg);
+      padding: 38px;
+      backdrop-filter: blur(14px);
+      box-shadow: var(--inner-bevel), var(--shadow-card);
+    }
+
+    .files-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .file-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      transition: all var(--transition-fast);
+    }
+
+    .file-card:hover {
+      border-color: var(--brand-indigo);
+      background: var(--bg-surface-elevated);
+      transform: translateY(-2px);
+    }
+
+    .file-glyph {
+      font-size: 1.6rem;
+    }
+
+    .file-meta h5 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .file-meta p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+
+    .terminal-bar {
+      background: #000000;
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--radius-md);
+      padding: 16px 22px;
+      font-family: var(--font-mono);
+      font-size: 0.88rem;
+      color: var(--brand-cyan-light);
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .copy-cmd-btn {
+      background: rgba(255, 255, 255, 0.12);
+      border: none;
+      color: #ffffff;
+      padding: 6px 14px;
+      border-radius: var(--radius-sm);
+      font-family: var(--font-display);
+      font-size: 0.8rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: var(--transition-fast);
+    }
+
+    .copy-cmd-btn:hover {
+      background: var(--brand-indigo);
+    }
+
+    /* ==========================================================================
+       FOOTER
+       ========================================================================== */
+    footer.site-footer {
+      border-top: 1px solid var(--border-subtle);
+      padding: 50px 0;
+      text-align: center;
+      background: var(--bg-surface);
+    }
+
+    .footer-note {
+      font-size: 0.92rem;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .footer-pills {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .footer-pill {
+      font-family: var(--font-mono);
+      font-size: 0.76rem;
+      color: var(--brand-indigo-light);
+      background: rgba(99, 102, 241, 0.08);
+      padding: 4px 12px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(99, 102, 241, 0.2);
+    }
+
+    /* Responsive Queries */
+    @media (max-width: 992px) {
+      .leakage-banner { grid-template-columns: 1fr; }
+      .calc-wrapper { grid-template-columns: 1fr; }
+      .sandbox-wrapper { grid-template-columns: 1fr; }
+      .nav-menu { display: none; }
+    }
+
+    @media (max-width: 640px) {
+      .sandbox-form { grid-template-columns: 1fr; }
+      .kpi-duo-grid { grid-template-columns: 1fr; }
+      .decile-btn-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Aurora Glowing Background Elements -->
+  <div class="aurora-bg" aria-hidden="true">
+    <div class="aurora-orb orb-1"></div>
+    <div class="aurora-orb orb-2"></div>
+    <div class="aurora-orb orb-3"></div>
+  </div>
+
+  <!-- =========================================================================
+       NAVIGATION HEADER
+       ========================================================================= -->
+  <header class="site-header" id="siteHeader">
+    <div class="container">
+      <nav class="nav-inner" aria-label="Main Navigation">
+        <a href="#hero" class="brand-logo" id="brandLogo">
+          <div class="brand-mark">
+            <svg viewBox="0 0 24 24">
+              <path d="M4 10h16v10H4V10zm2 2v6h12v-6H6zm6-9l8 5H2l8-5zm0 2.24L6.4 8h11.2L12 5.24z"/>
+            </svg>
+          </div>
+          <span>Banco<span class="brand-gradient-text">Predict</span></span>
+        </a>
+
+        <ul class="nav-menu" id="navMenu">
+          <li><a href="#problem" class="nav-link">The Problem</a></li>
+          <li><a href="#solved" class="nav-link">What We Solved</a></li>
+          <li><a href="#models" class="nav-link">Models & Benchmarks</a></li>
+          <li><a href="#calculator" class="nav-link">ROI Simulator</a></li>
+          <li><a href="#sandbox" class="nav-link">Scoring Sandbox</a></li>
+          <li><a href="#playbook" class="nav-link">Playbook</a></li>
+        </ul>
+
+        <div class="nav-actions-group">
+          <!-- Theme Toggle Switch -->
+          <button class="theme-toggle-btn" id="themeToggleBtn" onclick="toggleColorTheme()" title="Toggle Theme">
+            <svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="5"></circle>
+              <line x1="12" y1="1" x2="12" y2="3"></line>
+              <line x1="12" y1="21" x2="12" y2="23"></line>
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+              <line x1="1" y1="12" x2="3" y2="12"></line>
+              <line x1="21" y1="12" x2="23" y2="12"></line>
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+            </svg>
+          </button>
+
+          <a href="#deliverables" class="nav-cta-btn" id="navDeliverablesBtn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+            </svg>
+            Jupyter Artifact
+          </a>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- =========================================================================
+         HERO SECTION
+         ========================================================================= -->
+    <section class="hero-section" id="hero">
+      <div class="container">
+        <div class="hero-pill-badge">
+          <span class="pulsing-indicator"></span>
+          Portuguese Bank Marketing • Machine Learning Intelligence
+        </div>
+
+        <h1 class="hero-title">
+          From Brute-Force Telemarketing to <span class="hero-gradient-headline">Precision AI Lead Prioritization</span>
+        </h1>
+
+        <p class="hero-desc">
+          An end-to-end data science and machine learning solution transforming retail bank term deposit campaigns. We uncovered subtle post-call target leakage, handled extreme class imbalance, and boosted agent conversion from 11.3% to 40.5% while eliminating 80% of wasted call volume.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#calculator" class="btn btn-primary" id="heroCalcBtn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+              <line x1="8" y1="21" x2="16" y2="21"></line>
+              <line x1="12" y1="17" x2="12" y2="21"></line>
+            </svg>
+            Launch Decile ROI Simulator
+          </a>
+          <a href="#models" class="btn btn-outline" id="heroModelsBtn">
+            Inspect Model Benchmarks
+          </a>
+        </div>
+
+        <!-- 4 Key Executive Stat Cards -->
+        <div class="hero-stats-grid">
+          <div class="kpi-card">
+            <div class="kpi-top-bar">
+              <span class="kpi-trend-pill trend-cyan">Campaign Efficiency</span>
+            </div>
+            <div class="kpi-number text-cyan">-80%</div>
+            <div class="kpi-label">Call Volume Slashed</div>
+            <div class="kpi-caption">Focus agents exclusively on the top 20% highest-converting leads (Deciles 1 & 2).</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top-bar">
+              <span class="kpi-trend-pill trend-green">Revenue Protection</span>
+            </div>
+            <div class="kpi-number text-emerald">72.4%</div>
+            <div class="kpi-label">Total Deposits Retained</div>
+            <div class="kpi-caption">Captures almost three-quarters of all term deposit subscriptions with 1/5th the calls.</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top-bar">
+              <span class="kpi-trend-pill trend-indigo">Agent Multiplier</span>
+            </div>
+            <div class="kpi-number text-indigo">3.6x</div>
+            <div class="kpi-label">Conversion Rate Lift</div>
+            <div class="kpi-caption">Agent strike rate jumps from 11.27% baseline to 40.54% on prioritized prospects.</div>
+          </div>
+
+          <div class="kpi-card">
+            <div class="kpi-top-bar">
+              <span class="kpi-trend-pill trend-amber">Dataset Depth</span>
+            </div>
+            <div class="kpi-number text-amber">41,188</div>
+            <div class="kpi-label">Interactions Analyzed</div>
+            <div class="kpi-caption">Empirical banking records spanning 21 attributes across May 2008 – Nov 2010.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 1: THE PROBLEM STATEMENT
+         ========================================================================= -->
+    <section class="page-section" id="problem">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Executive Problem Statement</span>
+          <h2 class="section-title">Why Traditional Bank Telemarketing Was Burning Capital</h2>
+          <p class="section-subtitle">
+            Outbound phone campaigns are labor-intensive. When campaigns run blind without predictive lead scoring, agents spend 89% of their time hearing "No", bleeding operating budget and fatiguing the customer base.
+          </p>
+        </div>
+
+        <div class="problem-grid">
+          <div class="problem-card">
+            <div class="problem-icon-wrapper rose">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="15" y1="9" x2="9" y2="15"></line>
+                <line x1="9" y1="9" x2="15" y2="15"></line>
+              </svg>
+            </div>
+            <h3>88.7% Wasted Call Volume</h3>
+            <p>
+              Out of 41,188 outbound dials, only 4,640 (11.27%) resulted in a term deposit subscription. Random dialing resulted in 36,548 wasted conversations on uninterested customers.
+            </p>
+            <div class="problem-stat-tag danger">Class Ratio: 7.88 Negatives per 1 Positive</div>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon-wrapper amber">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                <line x1="16" y1="2" x2="16" y2="6"></line>
+                <line x1="8" y1="2" x2="8" y2="6"></line>
+                <line x1="3" y1="10" x2="21" y2="10"></line>
+              </svg>
+            </div>
+            <h3>Severe Seasonal Misallocation</h3>
+            <p>
+              The bank concentrated over 45% of its total call volume during May and July—months with dreadful conversion rates (&lt;9%). Meanwhile, top-converting autumn/winter months (&gt;43%) were starved of budget.
+            </p>
+            <div class="problem-stat-tag warning">May: 6.4% conv. vs March: 50.5% conv.</div>
+          </div>
+
+          <div class="problem-card">
+            <div class="problem-icon-wrapper cyan">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </div>
+            <h3>Channel Blindness & Fatigue</h3>
+            <p>
+              Substantial dial time was spent calling landlines (5.23% conversion), whereas cellular outreach converts at 14.74% (a 2.82x multiplier). Calling beyond 3 attempts resulted in severe fatigue (&lt;2.1% conversion).
+            </p>
+            <div class="problem-stat-tag warning">Cellular 2.82x higher than Landline</div>
+          </div>
+        </div>
+
+        <!-- Duration Leakage Banner -->
+        <div class="leakage-banner">
+          <div class="leakage-content">
+            <h3>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+                <line x1="12" y1="9" x2="12" y2="13"></line>
+                <line x1="12" y1="17" x2="12.01" y2="17"></line>
+              </svg>
+              The Critical Data Leakage Trap: Call "Duration"
+            </h3>
+            <p>
+              In historical call logs, the feature <code>duration</code> (call length in seconds) exhibits extreme correlation with sale success (<span style="font-family: var(--font-mono); font-weight: 700;">r = 0.405</span>). If a customer agrees to buy, the call naturally lasts 15 minutes to explain contracts; if they reject, they hang up in 10 seconds.
+            </p>
+            <p>
+              <strong>The Trap:</strong> Call duration is <em>completely unknown before dialing</em>. Including it produces an artificial test ROC-AUC of 0.9472, but creates an operational model that is <strong>100% useless in production</strong> because telemarketers need to rank prospects <em>prior</em> to picking up the telephone!
+            </p>
+          </div>
+
+          <div class="leakage-comparison-box">
+            <div class="leakage-row">
+              <div>
+                <strong>Benchmark Model (With Duration)</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Uses leaked post-call duration</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge-tag invalid">Infeasible / Leakage</span>
+                <div style="font-family: var(--font-mono); font-weight: 700; color: var(--brand-rose-light); margin-top: 4px;">ROC-AUC: 0.9472</div>
+              </div>
+            </div>
+
+            <div class="leakage-row">
+              <div>
+                <strong>Operational Model (Without Duration)</strong>
+                <div style="font-size: 0.8rem; color: var(--text-muted);">Strictly pre-call prospect attributes</div>
+              </div>
+              <div style="text-align: right;">
+                <span class="badge-tag valid">Production Ready</span>
+                <div style="font-family: var(--font-mono); font-weight: 700; color: var(--brand-emerald-light); margin-top: 4px;">ROC-AUC: 0.7984</div>
+              </div>
+            </div>
+
+            <div style="margin-top: 14px; font-size: 0.82rem; color: var(--text-dim); line-height: 1.4;">
+              * We deliberately bifurcated our architecture: an explicit benchmark demonstrating the leakage illusion, and a leak-free operational pipeline for real-world pre-call lead scoring.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 2: WHAT WE HAVE SOLVED
+         ========================================================================= -->
+    <section class="page-section" id="solved">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Technical Mitigations</span>
+          <h2 class="section-title">What We Have Solved: 5 Complex Data Science Hurdles</h2>
+          <p class="section-subtitle">
+            Overcoming subtle data traps in retail banking CRM systems required rigorous hypothesis testing, cost-sensitive algorithms, and domain-informed feature transformations.
+          </p>
+        </div>
+
+        <div class="solved-grid">
+          <!-- Challenge 1 -->
+          <div class="solved-card">
+            <div class="solved-step-tag">CHALLENGE 01</div>
+            <h4>Duration Target Leakage</h4>
+            <div class="solved-box-challenge">
+              <strong>The Obstacle:</strong> Call duration produces an illusory 0.947 ROC-AUC that cannot score leads before dialing.
+            </div>
+            <div class="solved-box-solution">
+              <strong>Our Solution:</strong> Discarded <code>duration</code> completely from the operational pipeline. Engineered prior behavioral memory features (recency, prior outcome) to recover legitimate predictive power.
+            </div>
+          </div>
+
+          <!-- Challenge 2 -->
+          <div class="solved-card">
+            <div class="solved-step-tag">CHALLENGE 02</div>
+            <h4>Severe Class Imbalance (88.7% vs 11.3%)</h4>
+            <div class="solved-box-challenge">
+              <strong>The Obstacle:</strong> Standard loss functions learn to predict 'No' continuously to achieve 88.7% useless accuracy.
+            </div>
+            <div class="solved-box-solution">
+              <strong>Our Solution:</strong> Deployed cost-sensitive weights (<code>scale_pos_weight = 7.87</code> in LightGBM/XGBoost) and calibrated decision thresholds from 0.50 down to <strong>0.28</strong> to maximize F1-score and minority recall.
+            </div>
+          </div>
+
+          <!-- Challenge 3 -->
+          <div class="solved-card">
+            <div class="solved-step-tag">CHALLENGE 03</div>
+            <h4>Macro Multicollinearity (ρ = 0.972)</h4>
+            <div class="solved-box-challenge">
+              <strong>The Obstacle:</strong> <code>euribor3m</code>, <code>emp.var.rate</code>, and <code>nr.employed</code> are near-perfectly collinear, inflating variance in standard regressions.
+            </div>
+            <div class="solved-box-solution">
+              <strong>Our Solution:</strong> Applied L2 ridge shrinkage to linear models and deployed histogram-based Gradient Boosted Trees (LightGBM) which split greedily without matrix inversion instability.
+            </div>
+          </div>
+
+          <!-- Challenge 4 -->
+          <div class="solved-card">
+            <div class="solved-step-tag">CHALLENGE 04</div>
+            <h4>Masked Missing Values ('unknown')</h4>
+            <div class="solved-box-challenge">
+              <strong>The Obstacle:</strong> Standard <code>.isnull()</code> audits returned 0, yet over 20% of credit defaults and housing statuses were encoded as <code>'unknown'</code>.
+            </div>
+            <div class="solved-box-solution">
+              <strong>Our Solution:</strong> Preserved <code>'unknown'</code> as an explicit informative category. Proved statistically that clients with unknown credit default convert at 2.5x lower rates than clients with verified good credit.
+            </div>
+          </div>
+
+          <!-- Challenge 5 -->
+          <div class="solved-card">
+            <div class="solved-step-tag">CHALLENGE 05</div>
+            <h4>Bimodal pdays Artifact (96.3% = 999)</h4>
+            <div class="solved-box-challenge">
+              <strong>The Obstacle:</strong> 96.3% of the <code>pdays</code> column contains the code 999 (client never contacted before), completely distorting continuous scaling.
+            </div>
+            <div class="solved-box-solution">
+              <strong>Our Solution:</strong> Engineered a binary indicator <code>pdays_contacted</code> and partitioned recency into discrete cohorts (<code>0-7 days</code>, <code>8-14 days</code>, <code>15+ days</code>, <code>never contacted</code>).
+            </div>
+          </div>
+
+          <!-- Challenge 6 -->
+          <div class="solved-card">
+            <div class="solved-step-tag">CHALLENGE 06</div>
+            <h4>Optimistic Cross-Validation Bias</h4>
+            <div class="solved-box-challenge">
+              <strong>The Obstacle:</strong> Data leakage can occur if scaling or one-hot encoders fit on validation splits.
+            </div>
+            <div class="solved-box-solution">
+              <strong>Our Solution:</strong> Implemented strict Scikit-Learn <code>Pipeline</code> encapsulation with <strong>Stratified 5-Fold Cross-Validation</strong>, ensuring zero data contamination across all train/test boundaries.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 3: WHAT WE HAVE DONE (BENCHMARKS & EVALUATION)
+         ========================================================================= -->
+    <section class="page-section" id="models">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Model Evaluation</span>
+          <h2 class="section-title">What We Have Done: 5 Pre-Call Models Benchmarked</h2>
+          <p class="section-subtitle">
+            Evaluated 5 algorithms on an unseen holdout test set of <strong>8,238 clients</strong>, measuring metrics sensitive to severe class imbalance.
+          </p>
+        </div>
+
+        <!-- Model Comparison Table -->
+        <div class="table-container">
+          <table class="benchmark-table" id="modelsBenchmarkTable">
+            <thead>
+              <tr>
+                <th>Model Architecture</th>
+                <th>Duration Included?</th>
+                <th>Test ROC-AUC</th>
+                <th>Test PR-AUC</th>
+                <th>Balanced Acc.</th>
+                <th>F1-Score</th>
+                <th>Recall (Sens.)</th>
+                <th>Status / Decision</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="leakage-row">
+                <td><strong>Benchmark LightGBM</strong></td>
+                <td><span style="color: var(--brand-rose-light); font-weight: 700;">Yes (Leakage)</span></td>
+                <td>0.9472</td>
+                <td>0.6385</td>
+                <td>0.7812</td>
+                <td>0.6214</td>
+                <td>0.6125</td>
+                <td><span class="badge-infeasible">Infeasible Ceiling</span></td>
+              </tr>
+              <tr class="champion-row">
+                <td>
+                  <strong style="color: var(--brand-indigo-light);">Tuned LightGBM (Operational)</strong>
+                  <div style="font-size: 0.76rem; color: var(--brand-emerald-light);">Fast histogram boosting + pos_weight</div>
+                </td>
+                <td><strong>No (Pre-Call Pure)</strong></td>
+                <td><strong>0.7984</strong></td>
+                <td><strong>0.4621</strong></td>
+                <td><strong>0.7385</strong></td>
+                <td><strong>0.5342</strong></td>
+                <td><strong>0.6584</strong></td>
+                <td><span class="badge-deploy">Champion (Deploy)</span></td>
+              </tr>
+              <tr>
+                <td><strong>XGBoost Classifier</strong></td>
+                <td>No (Pre-Call Pure)</td>
+                <td>0.7932</td>
+                <td>0.4578</td>
+                <td>0.7321</td>
+                <td>0.5289</td>
+                <td>0.6519</td>
+                <td><span class="badge-baseline">Runner-Up</span></td>
+              </tr>
+              <tr>
+                <td><strong>Random Forest (150 Trees)</strong></td>
+                <td>No (Pre-Call Pure)</td>
+                <td>0.7891</td>
+                <td>0.4412</td>
+                <td>0.7248</td>
+                <td>0.5187</td>
+                <td>0.6401</td>
+                <td><span class="badge-baseline">Bagging Baseline</span></td>
+              </tr>
+              <tr>
+                <td><strong>Logistic Regression (L2)</strong></td>
+                <td>No (Pre-Call Pure)</td>
+                <td>0.7854</td>
+                <td>0.4289</td>
+                <td>0.7210</td>
+                <td>0.5098</td>
+                <td>0.6328</td>
+                <td><span class="badge-baseline">Linear Baseline</span></td>
+              </tr>
+              <tr>
+                <td><strong>Decision Tree (Pruned)</strong></td>
+                <td>No (Pre-Call Pure)</td>
+                <td>0.7412</td>
+                <td>0.3541</td>
+                <td>0.6854</td>
+                <td>0.4421</td>
+                <td>0.5912</td>
+                <td><span class="badge-baseline">High Variance</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Interactive Visual Analytics Charts (Chart.js) -->
+        <div class="analytics-box">
+          <div class="tabs-nav" role="tablist">
+            <button class="tab-trigger active" onclick="activateTab('tabGains', this)" id="btnTabGains">
+              Cumulative Gains & Decile Lift
+            </button>
+            <button class="tab-trigger" onclick="activateTab('tabSeason', this)" id="btnTabSeason">
+              Seasonality vs Call Allocation
+            </button>
+            <button class="tab-trigger" onclick="activateTab('tabFeat', this)" id="btnTabFeat">
+              Top Pre-Call Feature Importances
+            </button>
+            <button class="tab-trigger" onclick="activateTab('tabFatigue', this)" id="btnTabFatigue">
+              Call Fatigue Drop-off
+            </button>
+          </div>
+
+          <!-- Tab 1: Cumulative Gains -->
+          <div class="tab-panel active" id="tabGains">
+            <div class="canvas-wrapper">
+              <canvas id="cumulativeGainsChart"></canvas>
+            </div>
+            <div class="chart-footnotes">
+              <div class="footnote-item">
+                <span class="footnote-swatch" style="background: var(--brand-indigo);"></span>
+                <span><strong>AI Model Lift:</strong> Top 20% leads capture <strong>72.4%</strong> of subscribers</span>
+              </div>
+              <div class="footnote-item">
+                <span class="footnote-swatch" style="background: #94a3b8;"></span>
+                <span><strong>Random Calling:</strong> Top 20% leads capture only 20.0% of subscribers</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Seasonality -->
+          <div class="tab-panel" id="tabSeason">
+            <div class="canvas-wrapper">
+              <canvas id="seasonalityChart"></canvas>
+            </div>
+            <div class="chart-footnotes">
+              <div class="footnote-item">
+                <span class="footnote-swatch" style="background: var(--brand-emerald);"></span>
+                <span>Conversion Rate (%)</span>
+              </div>
+              <div class="footnote-item">
+                <span class="footnote-swatch" style="background: var(--brand-rose);"></span>
+                <span>Historical Dialed Calls Volume</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Feature Importance -->
+          <div class="tab-panel" id="tabFeat">
+            <div class="canvas-wrapper">
+              <canvas id="featureImpChart"></canvas>
+            </div>
+            <div class="chart-footnotes">
+              <div class="footnote-item">
+                <span class="footnote-swatch" style="background: var(--brand-indigo-light);"></span>
+                <span>Tuned LightGBM Split Importance (Pre-Call Attributes Only)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Fatigue -->
+          <div class="tab-panel" id="tabFatigue">
+            <div class="canvas-wrapper">
+              <canvas id="fatigueChart"></canvas>
+            </div>
+            <div class="chart-footnotes">
+              <div class="footnote-item">
+                <span class="footnote-swatch" style="background: var(--brand-amber);"></span>
+                <span>Conversion drops from 13.0% (Call 1) to 2.1% (Call 6+)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 4: INTERACTIVE ROI & DECILE SIMULATOR
+         ========================================================================= -->
+    <section class="page-section" id="calculator">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Strategic Decision Engine</span>
+          <h2 class="section-title">Interactive ROI & Decile Prioritization Simulator</h2>
+          <p class="section-subtitle">
+            Model how our LightGBM AI ranking dynamically reduces telemarketing operational expenses while protecting deposit acquisition targets.
+          </p>
+        </div>
+
+        <div class="calc-wrapper">
+          <div class="calc-controls">
+            <h3>Campaign Configuration</h3>
+            <p>Customize prospect volume, cost per dial, and decile filtering cutoff.</p>
+
+            <div class="control-row">
+              <div class="control-label-bar">
+                <label for="totalLeadsRange">Total Customer Pool to Score:</label>
+                <span class="control-badge" id="leadsValBadge">41,188 Leads</span>
+              </div>
+              <input type="range" id="totalLeadsRange" min="5000" max="100000" step="1000" value="41188" oninput="recalcSimulator()" />
+            </div>
+
+            <div class="control-row">
+              <div class="control-label-bar">
+                <label for="costPerDialRange">Agent Cost per Call Attempt ($):</label>
+                <span class="control-badge" id="costValBadge">$6.50 / call</span>
+              </div>
+              <input type="range" id="costPerDialRange" min="2" max="25" step="0.5" value="6.5" oninput="recalcSimulator()" />
+            </div>
+
+            <div class="control-row">
+              <div class="control-label-bar">
+                <label>Targeted Decile Tier (AI Prioritization):</label>
+                <span class="control-badge" id="decileBadge">Top 20% (Deciles 1-2)</span>
+              </div>
+              <div class="decile-btn-grid">
+                <button class="decile-select-btn" onclick="setDecile(1, this)">Top 10%</button>
+                <button class="decile-select-btn active" onclick="setDecile(2, this)">Top 20%</button>
+                <button class="decile-select-btn" onclick="setDecile(3, this)">Top 30%</button>
+                <button class="decile-select-btn" onclick="setDecile(10, this)">100% (Baseline)</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="calc-outputs">
+            <div class="calc-outputs-header">
+              <span>Projected Operational Outcomes</span>
+              <span class="badge-deploy">AI Optimized</span>
+            </div>
+
+            <div class="kpi-duo-grid">
+              <div class="kpi-subcard">
+                <div class="num text-cyan" id="calcCallsMade">8,238</div>
+                <div class="desc">Total Calls Placed</div>
+              </div>
+
+              <div class="kpi-subcard">
+                <div class="num text-emerald" id="calcSubscribers">3,359</div>
+                <div class="desc">Deposits Captured (72.4%)</div>
+              </div>
+
+              <div class="kpi-subcard">
+                <div class="num text-amber" id="calcConvRate">40.77%</div>
+                <div class="desc">Agent Conversion Rate (vs 11.3%)</div>
+              </div>
+
+              <div class="kpi-subcard">
+                <div class="num text-indigo" id="calcCostSavings">$214,175</div>
+                <div class="desc">Call Center Budget Saved</div>
+              </div>
+            </div>
+
+            <div class="calc-callout-msg" id="calcSummaryBox">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+              </svg>
+              <span>By prioritizing Deciles 1 & 2, you eliminate <strong>32,950 unnecessary calls</strong> and achieve a <strong>3.6x efficiency multiplier</strong>.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 5: LIVE LEAD SCORING SANDBOX
+         ========================================================================= -->
+    <section class="page-section" id="sandbox">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Interactive Simulation</span>
+          <h2 class="section-title">Live Lead Propensity Scoring Sandbox</h2>
+          <p class="section-subtitle">
+            Simulate how our LightGBM model evaluates customer attributes in real time to generate an operational pre-call recommendation and tailor the pitch.
+          </p>
+        </div>
+
+        <div class="sandbox-wrapper">
+          <form class="sandbox-form" id="leadSandboxForm" onsubmit="return false;">
+            <div class="form-field">
+              <label for="sbAge">Client Age Group</label>
+              <select id="sbAge" class="select-input" onchange="runSandboxScorer()">
+                <option value="student">Student (&lt; 25 yrs) - 31.4% base</option>
+                <option value="senior">Senior (&gt; 60 yrs) - 45.5% base</option>
+                <option value="adult" selected>Working Adult (25-59 yrs) - 9.8% base</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="sbContact">Contact Channel</label>
+              <select id="sbContact" class="select-input" onchange="runSandboxScorer()">
+                <option value="cellular" selected>Cellular Phone (14.7%)</option>
+                <option value="telephone">Fixed Landline (5.2%)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="sbPoutcome">Previous Campaign Outcome</label>
+              <select id="sbPoutcome" class="select-input" onchange="runSandboxScorer()">
+                <option value="success">Success (Subscribed Prior: 65.1%)</option>
+                <option value="nonexistent" selected>Cold / Never Contacted (8.8%)</option>
+                <option value="failure">Failure (Declined Prior: 14.2%)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="sbMonth">Campaign Outreach Month</label>
+              <select id="sbMonth" class="select-input" onchange="runSandboxScorer()">
+                <option value="peak">March / September / October (45-50%)</option>
+                <option value="normal" selected>April / August / November (10-20%)</option>
+                <option value="low">May / July (6-9%)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="sbEuribor">3-Month Euribor Interest Rate</label>
+              <select id="sbEuribor" class="select-input" onchange="runSandboxScorer()">
+                <option value="low" selected>Low (&lt; 1.5% - Uncertainty/Easing)</option>
+                <option value="high">High (&gt; 4.0% - Tightening Cycle)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label for="sbAttempts">Current Campaign Call Attempts</label>
+              <select id="sbAttempts" class="select-input" onchange="runSandboxScorer()">
+                <option value="1" selected>1st Call Attempt (13.0%)</option>
+                <option value="2">2nd Call Attempt (11.5%)</option>
+                <option value="3">3rd Call Attempt (10.1%)</option>
+                <option value="6">6+ Call Attempts (2.1% - Fatigue)</option>
+              </select>
+            </div>
+          </form>
+
+          <div class="sandbox-result-box" id="sandboxCard">
+            <span class="priority-badge tier-high" id="sandboxTierBadge">Tier 1: High Priority Lead</span>
+            <div class="score-meter text-emerald" id="sandboxScore">68.4%</div>
+            <div class="score-label">Predicted Propensity to Subscribe</div>
+
+            <div class="script-advice-box" id="sandboxAdvice">
+              <strong>Action Mandate: Immediate Direct Call</strong><br/>
+              Prospect demonstrates extraordinary propensity. Route directly to top-performing phone bankers. Emphasize guaranteed returns and liquid security.
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 6: STRATEGIC 7-PILLAR ACTION PLAYBOOK
+         ========================================================================= -->
+    <section class="page-section" id="playbook">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Strategic Playbook</span>
+          <h2 class="section-title">The 7-Pillar Strategic Action Playbook for Banking</h2>
+          <p class="section-subtitle">
+            How marketing leadership and call center supervisors operationalize this predictive model into daily workflows.
+          </p>
+        </div>
+
+        <div class="playbook-grid">
+          <div class="playbook-card">
+            <div class="playbook-num-tag">1</div>
+            <h4>Strict Decile 1 & 2 Targeting</h4>
+            <p>
+              Pre-score all CRM contacts monthly. Route only leads scoring in the top two deciles to telemarketers. Discontinue cold outbound dials to the lower 80%.
+            </p>
+            <div class="playbook-kpi-pill">+3.6x Higher Strike Rate</div>
+          </div>
+
+          <div class="playbook-card">
+            <div class="playbook-num-tag">2</div>
+            <h4>Seasonal Budget Pivot</h4>
+            <p>
+              Reallocate marketing headcount away from May and July (&lt;9% conv.) toward March, September, October, and December (&gt;43% conv.) to capture seasonal liquidity surges.
+            </p>
+            <div class="playbook-kpi-pill">5.2x Seasonal Efficiency</div>
+          </div>
+
+          <div class="playbook-card">
+            <div class="playbook-num-tag">3</div>
+            <h4>Cellular-First Outreach Mandate</h4>
+            <p>
+              Mandate calls to verified mobile numbers (14.7% conv.) rather than fixed landlines (5.2% conv.). Prompt online banking and mobile app users to keep phone numbers updated.
+            </p>
+            <div class="playbook-kpi-pill">2.82x Channel Multiplier</div>
+          </div>
+
+          <div class="playbook-card">
+            <div class="playbook-num-tag">4</div>
+            <h4>The "3-Call Fatigue" Rule</h4>
+            <p>
+              Enforce an automated CRM lock after 3 unsuccessful dials per campaign. Beyond 3 attempts, marginal conversion drops to 2% while generating negative brand fatigue.
+            </p>
+            <div class="playbook-kpi-pill">Zero Agent Burnout</div>
+          </div>
+
+          <div class="playbook-card">
+            <div class="playbook-num-tag">5</div>
+            <h4>7-Day Warm Re-Engagement Queue</h4>
+            <p>
+              Customers who previously subscribed (<code>poutcome='success'</code>) convert at 65.1%. Build an automated queue ensuring these warm leads are re-contacted within 3–7 days.
+            </p>
+            <div class="playbook-kpi-pill">65.1% Repeat Conversion</div>
+          </div>
+
+          <div class="playbook-card">
+            <div class="playbook-num-tag">6</div>
+            <h4>Macro Counter-Cyclical Triggers</h4>
+            <p>
+              Trigger automated campaign pushes whenever the 3-month Euribor drops below 1.5% or market volatility increases—investors naturally seek fixed, guaranteed deposits.
+            </p>
+            <div class="playbook-kpi-pill">Macro Market Timing</div>
+          </div>
+
+          <div class="playbook-card">
+            <div class="playbook-num-tag">7</div>
+            <h4>Persona-Specific Value Propositions</h4>
+            <p>
+              Pitch capital safety and pension supplement yields to seniors (&gt;60 yrs, 45.5% conv.). Pitch automated mobile recurring savings to students (&lt;25 yrs, 31.4% conv.).
+            </p>
+            <div class="playbook-kpi-pill">Tailored Messaging</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================================
+         SECTION 7: DELIVERABLES & NOTEBOOK QUICK ACCESS
+         ========================================================================= -->
+    <section class="page-section" id="deliverables">
+      <div class="container">
+        <div class="section-header">
+          <span class="section-eyebrow">Project Deliverables</span>
+          <h2 class="section-title">Everything Needed for Audit & Deployment</h2>
+          <p class="section-subtitle">
+            All code, statistical tests, machine learning models, and executive write-ups are fully preserved and reproducible within the repository.
+          </p>
+        </div>
+
+        <div class="deliverables-wrapper">
+          <div class="files-grid">
+            <div class="file-card">
+              <div class="file-glyph">📓</div>
+              <div class="file-meta">
+                <h5>Bank_Marketing_Term_Deposit_Prediction.ipynb</h5>
+                <p>Fully executed Jupyter Notebook (1.55 MB) containing end-to-end code, charts, statistical tests, CV evaluations, and decile tables.</p>
+              </div>
+            </div>
+
+            <div class="file-card">
+              <div class="file-glyph">⚡</div>
+              <div class="file-meta">
+                <h5>generate_bank_notebook.py</h5>
+                <p>Reproducible Python orchestrator utilizing <code>nbformat</code> and <code>nbclient</code> to programmatically build and execute the notebook.</p>
+              </div>
+            </div>
+
+            <div class="file-card">
+              <div class="file-glyph">📄</div>
+              <div class="file-meta">
+                <h5>README.md</h5>
+                <p>Comprehensive technical documentation including executive tasks, leakage analysis, cross-validation metrics, and strategic playbook.</p>
+              </div>
+            </div>
+
+            <div class="file-card">
+              <div class="file-glyph">📊</div>
+              <div class="file-meta">
+                <h5>Data/bank-additional-full.csv</h5>
+                <p>Primary dataset containing 41,188 client interactions and 21 demographic, operational, and macroeconomic attributes.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="terminal-bar">
+            <span>jupyter lab Bank_Marketing_Term_Deposit_Prediction.ipynb</span>
+            <button class="copy-cmd-btn" onclick="copyCommand(this)">Copy Command</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- =========================================================================
+       FOOTER
+       ========================================================================= -->
+  <footer class="site-footer">
+    <div class="container">
+      <p class="footer-note">
+        <strong>Portuguese Bank Marketing Predictive Intelligence</strong> • Machine Learning & Strategic Business Advisory Solution
+      </p>
+      <div class="footer-pills">
+        <span class="footer-pill">Python 3.14</span>
+        <span class="footer-pill">LightGBM</span>
+        <span class="footer-pill">XGBoost</span>
+        <span class="footer-pill">Scikit-Learn</span>
+        <span class="footer-pill">Sora & Inter</span>
+        <span class="footer-pill">Chart.js</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =========================================================================
+       JAVASCRIPT LOGIC
+       ========================================================================= -->
+  <script>
+    /* ==========================================================================
+       THEME TOGGLE (DARK OBSIDIAN / EXECUTIVE LIGHT)
+       ========================================================================== */
+    function toggleColorTheme() {
+      const html = document.documentElement;
+      const currentTheme = html.getAttribute('data-theme') || 'dark';
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', newTheme);
+      localStorage.setItem('bank_dashboard_theme', newTheme);
+      updateThemeIcon(newTheme);
+      refreshChartColors(newTheme);
+    }
+
+    function updateThemeIcon(theme) {
+      const icon = document.getElementById('themeIcon');
+      if (theme === 'light') {
+        // Moon icon for switching back to dark
+        icon.innerHTML = `<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>`;
+      } else {
+        // Sun icon for switching to light
+        icon.innerHTML = `
+          <circle cx="12" cy="12" r="5"></circle>
+          <line x1="12" y1="1" x2="12" y2="3"></line>
+          <line x1="12" y1="21" x2="12" y2="23"></line>
+          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+          <line x1="1" y1="12" x2="3" y2="12"></line>
+          <line x1="21" y1="12" x2="23" y2="12"></line>
+          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        `;
+      }
+    }
+
+    // Load saved theme preference
+    const savedTheme = localStorage.getItem('bank_dashboard_theme') || 'dark';
+    document.documentElement.setAttribute('data-theme', savedTheme);
+    window.addEventListener('DOMContentLoaded', () => {
+      updateThemeIcon(savedTheme);
+    });
+
+    /* ==========================================================================
+       TAB SWITCHER FOR ANALYTICS CHARTS
+       ========================================================================== */
+    function activateTab(tabId, btn) {
+      document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+      document.querySelectorAll('.tab-trigger').forEach(b => b.classList.remove('active'));
+      
+      const panel = document.getElementById(tabId);
+      if (panel) panel.classList.add('active');
+      if (btn) btn.classList.add('active');
+    }
+
+    /* ==========================================================================
+       ROI & DECILE CALCULATOR LOGIC
+       ========================================================================== */
+    let selectedDecile = 2; // Default Top 20% (Deciles 1 & 2)
+
+    const decileData = [
+      { decile: 1, pctSub: 48.2, cumPctSub: 48.2, convRate: 54.2 },
+      { decile: 2, pctSub: 24.2, cumPctSub: 72.4, convRate: 26.9 },
+      { decile: 3, pctSub: 10.4, cumPctSub: 82.8, convRate: 11.6 },
+      { decile: 4, pctSub: 6.2,  cumPctSub: 89.0, convRate: 6.9  },
+      { decile: 5, pctSub: 3.8,  cumPctSub: 92.8, convRate: 4.2  },
+      { decile: 6, pctSub: 2.6,  cumPctSub: 95.4, convRate: 2.9  },
+      { decile: 7, pctSub: 1.8,  cumPctSub: 97.2, convRate: 2.0  },
+      { decile: 8, pctSub: 1.3,  cumPctSub: 98.5, convRate: 1.4  },
+      { decile: 9, pctSub: 0.9,  cumPctSub: 99.4, convRate: 1.0  },
+      { decile: 10, pctSub: 0.6, cumPctSub: 100.0, convRate: 0.7 }
+    ];
+
+    function setDecile(num, btn) {
+      selectedDecile = num;
+      document.querySelectorAll('.decile-select-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+
+      const badge = document.getElementById('decileBadge');
+      if (num === 1) badge.textContent = 'Top 10% (Decile 1)';
+      else if (num === 2) badge.textContent = 'Top 20% (Deciles 1-2)';
+      else if (num === 3) badge.textContent = 'Top 30% (Deciles 1-3)';
+      else badge.textContent = 'All 100% (Baseline)';
+
+      recalcSimulator();
+    }
+
+    function recalcSimulator() {
+      const totalLeads = parseInt(document.getElementById('totalLeadsRange').value, 10);
+      const costPerDial = parseFloat(document.getElementById('costPerDialRange').value);
+
+      document.getElementById('leadsValBadge').textContent = totalLeads.toLocaleString() + ' Leads';
+      document.getElementById('costValBadge').textContent = '$' + costPerDial.toFixed(2) + ' / call';
+
+      const baselineSubscribers = Math.round(totalLeads * 0.1127);
+      const baselineCost = totalLeads * costPerDial;
+
+      const pctCalled = selectedDecile * 0.10;
+      const cumPctCaptured = decileData[selectedDecile - 1].cumPctSub;
+
+      const callsMade = Math.round(totalLeads * pctCalled);
+      const callsSaved = totalLeads - callsMade;
+      const subscribersCaptured = Math.round(baselineSubscribers * (cumPctCaptured / 100));
+      const convRate = (subscribersCaptured / callsMade) * 100;
+      const totalCampaignCost = callsMade * costPerDial;
+      const costSaved = baselineCost - totalCampaignCost;
+
+      document.getElementById('calcCallsMade').textContent = callsMade.toLocaleString();
+      document.getElementById('calcSubscribers').textContent = subscribersCaptured.toLocaleString();
+      document.getElementById('calcConvRate').textContent = convRate.toFixed(2) + '%';
+      document.getElementById('calcCostSavings').textContent = '$' + Math.round(costSaved).toLocaleString();
+
+      const summaryBox = document.getElementById('calcSummaryBox');
+      if (selectedDecile <= 3) {
+        const liftFactor = (convRate / 11.27).toFixed(1);
+        summaryBox.innerHTML = `
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          <span>By calling the <strong>Top ${selectedDecile * 10}%</strong>, you eliminate <strong>${callsSaved.toLocaleString()} calls</strong>, capture <strong>${cumPctCaptured.toFixed(1)}% of sales</strong>, and achieve a <strong>${liftFactor}x conversion lift</strong>!</span>
+        `;
+      } else {
+        summaryBox.innerHTML = `
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+          </svg>
+          <span>Running at 100% baseline: All <strong>${totalLeads.toLocaleString()} calls</strong> dialed at an un-optimized <strong>11.27% strike rate</strong> ($0 saved).</span>
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       LEAD PROPENSITY SCORING SANDBOX
+       ========================================================================== */
+    function runSandboxScorer() {
+      const age = document.getElementById('sbAge').value;
+      const contact = document.getElementById('sbContact').value;
+      const poutcome = document.getElementById('sbPoutcome').value;
+      const month = document.getElementById('sbMonth').value;
+      const euribor = document.getElementById('sbEuribor').value;
+      const attempts = document.getElementById('sbAttempts').value;
+
+      let score = 11.27;
+
+      if (age === 'senior') score += 34.0;
+      else if (age === 'student') score += 20.0;
+      else score -= 1.5;
+
+      if (contact === 'cellular') score += 5.0;
+      else score -= 6.0;
+
+      if (poutcome === 'success') score += 42.0;
+      else if (poutcome === 'failure') score += 3.0;
+      else score -= 2.0;
+
+      if (month === 'peak') score += 22.0;
+      else if (month === 'low') score -= 5.0;
+
+      if (euribor === 'low') score += 6.0;
+      else score -= 4.0;
+
+      if (attempts === '6') score -= 14.0;
+      else if (attempts === '3') score -= 3.0;
+
+      score = Math.max(1.5, Math.min(93.8, score));
+
+      const scoreEl = document.getElementById('sandboxScore');
+      const badgeEl = document.getElementById('sandboxTierBadge');
+      const adviceEl = document.getElementById('sandboxAdvice');
+
+      scoreEl.textContent = score.toFixed(1) + '%';
+
+      if (score >= 45) {
+        scoreEl.className = 'score-meter text-emerald';
+        badgeEl.className = 'priority-badge tier-high';
+        badgeEl.textContent = 'Tier 1: High Priority Lead (Deciles 1-2)';
+        adviceEl.innerHTML = `
+          <strong>Action Mandate: Immediate Direct Call</strong><br/>
+          Prospect demonstrates extraordinary propensity. Route directly to senior phone bankers. Emphasize guaranteed returns and liquid capital security.
+        `;
+      } else if (score >= 20) {
+        scoreEl.className = 'score-meter text-amber';
+        badgeEl.className = 'priority-badge tier-medium';
+        badgeEl.textContent = 'Tier 2: Warm Prospect (Deciles 3-4)';
+        adviceEl.innerHTML = `
+          <strong>Action Mandate: Digital Pre-Warm then Call</strong><br/>
+          Send mobile push notification or email highlighting current term rates prior to dialing. Limit call duration to 3 attempts maximum.
+        `;
+      } else {
+        scoreEl.className = 'score-meter text-rose';
+        badgeEl.className = 'priority-badge tier-low';
+        badgeEl.textContent = 'Tier 3: Deprioritized Lead (Deciles 5-10)';
+        adviceEl.innerHTML = `
+          <strong>Action Mandate: Do NOT Dial Outbound</strong><br/>
+          Prospect has low conversion probability. Save telemarketer hours. Rely on passive inbound ATM screens or online portal banners.
+        `;
+      }
+    }
+
+    /* ==========================================================================
+       CLIPBOARD COPY
+       ========================================================================== */
+    function copyCommand(btn) {
+      const cmd = "jupyter lab Bank_Marketing_Term_Deposit_Prediction.ipynb";
+      navigator.clipboard.writeText(cmd).then(() => {
+        const prev = btn.textContent;
+        btn.textContent = "Copied!";
+        setTimeout(() => { btn.textContent = prev; }, 2000);
+      });
+    }
+
+    /* ==========================================================================
+       CHART.JS CONFIGURATION & THEME REFRESH
+       ========================================================================== */
+    let chartGains, chartSeason, chartFeat, chartFatigue;
+
+    function refreshChartColors(theme) {
+      const gridColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.05)' : 'rgba(15, 23, 42, 0.06)';
+      const textColor = theme === 'dark' ? '#94a3b8' : '#475569';
+
+      [chartGains, chartSeason, chartFeat, chartFatigue].forEach(chart => {
+        if (chart) {
+          if (chart.options.scales.x) {
+            chart.options.scales.x.grid.color = gridColor;
+            chart.options.scales.x.ticks.color = textColor;
+          }
+          if (chart.options.scales.y) {
+            chart.options.scales.y.grid.color = gridColor;
+            chart.options.scales.y.ticks.color = textColor;
+          }
+          if (chart.options.scales.yVolume) {
+            chart.options.scales.yVolume.grid.color = gridColor;
+            chart.options.scales.yVolume.ticks.color = textColor;
+          }
+          if (chart.options.scales.yRate) {
+            chart.options.scales.yRate.ticks.color = textColor;
+          }
+          chart.update();
+        }
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      recalcSimulator();
+      runSandboxScorer();
+
+      Chart.defaults.font.family = "'Inter', sans-serif";
+      const isDark = (document.documentElement.getAttribute('data-theme') || 'dark') === 'dark';
+      const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(15, 23, 42, 0.06)';
+      const textColor = isDark ? '#94a3b8' : '#475569';
+
+      // 1. Cumulative Gains Chart
+      const ctxGains = document.getElementById('cumulativeGainsChart');
+      if (ctxGains) {
+        chartGains = new Chart(ctxGains, {
+          type: 'line',
+          data: {
+            labels: ['0%', '10%', '20%', '30%', '40%', '50%', '60%', '70%', '80%', '90%', '100%'],
+            datasets: [
+              {
+                label: 'Tuned LightGBM Model (Cumulative % Responders)',
+                data: [0, 48.2, 72.4, 82.8, 89.0, 92.8, 95.4, 97.2, 98.5, 99.4, 100],
+                borderColor: '#6366f1',
+                backgroundColor: 'rgba(99, 102, 241, 0.16)',
+                fill: true,
+                tension: 0.35,
+                borderWidth: 3.5,
+                pointBackgroundColor: '#818cf8',
+                pointRadius: 4.5
+              },
+              {
+                label: 'Random Telemarketing Baseline',
+                data: [0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 100],
+                borderColor: '#94a3b8',
+                borderDash: [6, 6],
+                borderWidth: 2,
+                pointRadius: 0
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'top', labels: { color: textColor } }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: '% of Total Customer Leads Contacted', color: textColor },
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              },
+              y: {
+                title: { display: true, text: '% of Total Deposit Subscribers Captured', color: textColor },
+                min: 0,
+                max: 100,
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              }
+            }
+          }
+        });
+      }
+
+      // 2. Seasonality Chart
+      const ctxSeason = document.getElementById('seasonalityChart');
+      if (ctxSeason) {
+        chartSeason = new Chart(ctxSeason, {
+          data: {
+            labels: ['Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+            datasets: [
+              {
+                type: 'bar',
+                label: 'Call Volume (Interactions)',
+                data: [546, 2632, 13769, 5318, 7174, 6178, 570, 718, 4101, 182],
+                backgroundColor: 'rgba(244, 63, 94, 0.35)',
+                borderColor: '#f43f5e',
+                borderWidth: 1.5,
+                borderRadius: 4,
+                yAxisID: 'yVolume'
+              },
+              {
+                type: 'line',
+                label: 'Conversion Rate (%)',
+                data: [50.55, 20.48, 6.45, 10.51, 9.05, 10.60, 44.91, 43.87, 10.14, 48.90],
+                borderColor: '#10b981',
+                backgroundColor: '#10b981',
+                borderWidth: 3,
+                tension: 0.3,
+                yAxisID: 'yRate',
+                pointRadius: 5
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'top', labels: { color: textColor } }
+            },
+            scales: {
+              x: { grid: { color: gridColor }, ticks: { color: textColor } },
+              yVolume: {
+                type: 'linear',
+                position: 'left',
+                title: { display: true, text: 'Call Volume', color: '#f43f5e' },
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              },
+              yRate: {
+                type: 'linear',
+                position: 'right',
+                title: { display: true, text: 'Conversion Rate (%)', color: '#10b981' },
+                min: 0,
+                max: 60,
+                grid: { drawOnChartArea: false },
+                ticks: { color: textColor }
+              }
+            }
+          }
+        });
+      }
+
+      // 3. Feature Importance Chart
+      const ctxFeat = document.getElementById('featureImpChart');
+      if (ctxFeat) {
+        chartFeat = new Chart(ctxFeat, {
+          type: 'bar',
+          data: {
+            labels: [
+              'euribor3m (3M Rate)',
+              'age (Customer Age)',
+              'campaign (Call Intensity)',
+              'pdays (Days Since Contact)',
+              'cons.conf.idx (Confidence)',
+              'nr.employed (# Employees)',
+              'poutcome_success (Prior Win)',
+              'cons.price.idx (CPI)',
+              'emp.var.rate (Emp Variation)',
+              'contact_telephone (Channel)'
+            ],
+            datasets: [{
+              label: 'Split Importance (LightGBM)',
+              data: [842, 621, 473, 412, 389, 345, 310, 287, 240, 195],
+              backgroundColor: 'rgba(99, 102, 241, 0.45)',
+              borderColor: '#6366f1',
+              borderWidth: 1.5,
+              borderRadius: 6
+            }]
+          },
+          options: {
+            indexAxis: 'y',
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+              x: {
+                title: { display: true, text: 'Feature Split Count', color: textColor },
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              },
+              y: {
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              }
+            }
+          }
+        });
+      }
+
+      // 4. Call Fatigue Chart
+      const ctxFatigue = document.getElementById('fatigueChart');
+      if (ctxFatigue) {
+        chartFatigue = new Chart(ctxFatigue, {
+          type: 'line',
+          data: {
+            labels: ['1 Call', '2 Calls', '3 Calls', '4 Calls', '5-6 Calls', '7+ Calls'],
+            datasets: [{
+              label: 'Conversion Rate (%) by Contact Frequency',
+              data: [13.04, 11.46, 10.77, 9.39, 7.21, 2.12],
+              borderColor: '#f59e0b',
+              backgroundColor: 'rgba(245, 158, 11, 0.15)',
+              fill: true,
+              tension: 0.35,
+              borderWidth: 3,
+              pointRadius: 5,
+              pointBackgroundColor: '#f59e0b'
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+              legend: { position: 'top', labels: { color: textColor } }
+            },
+            scales: {
+              x: {
+                title: { display: true, text: 'Number of Outbound Calls to Client', color: textColor },
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              },
+              y: {
+                title: { display: true, text: 'Conversion Rate (%)', color: textColor },
+                min: 0,
+                max: 16,
+                grid: { color: gridColor },
+                ticks: { color: textColor }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>
