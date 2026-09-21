@@ -75,25 +75,7 @@ A frequent pitfall in bank marketing analytics is the uncritical inclusion of th
 
 A model trained with `duration` achieves an artificial, illusory ROC-AUC of **0.9472**, but **cannot score leads in CRM pipelines prior to dialing**.
 
-### Architectural Bifurcation:
-To address this cleanly, we designed two distinct modeling tracks:
-1. **Benchmark Model (With Duration)**: Serves as a theoretical offline diagnostic confirming the leakage mechanism.
-2. **Operational Production Model (Without Duration)**: Deploys strictly pre-call prospect demographics, contact histories, and macroeconomic indicators to generate actionable rankings before dialing.
 
-```mermaid
-graph TD
-    A[Raw CRM Data: 41,188 interactions] --> B{Duration Feature Handling}
-    B -->|Includes Post-Call Duration| C[Benchmark Pipeline: Leaked]
-    C --> D[ROC-AUC: 0.9472 | Infeasible in Operations]
-    B -->|Discards Duration - Pure Pre-Call| E[Operational Pipeline: Production]
-    E --> F[Feature Engineering & Recency Cohorts]
-    F --> G[Cost-Sensitive LightGBM / XGBoost]
-    G --> H[Threshold Calibration tau = 0.28]
-    H --> I[Decile Prioritizer: Score CRM Leads]
-    I --> J[Dial Only Top 20% | 72.5% Sales Captured]
-```
-
----
 
 ## 🛠️ System Architecture & Methodology
 
